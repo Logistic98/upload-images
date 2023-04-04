@@ -16,19 +16,12 @@ from configparser import ConfigParser
 def read_config(config_path):
     cfg = ConfigParser()
     cfg.read(config_path, encoding='utf-8')
-    minio_url = cfg.get('minio', 'minio_url')
-    minio_domain = cfg.get('minio', 'minio_domain')
-    access_key = cfg.get('minio', 'access_key')
-    secret_key = cfg.get('minio', 'secret_key')
-    minio_bucket = cfg.get('minio', 'minio_bucket')
-    upload_log_path = cfg.get('log', 'upload_log_path')
+    section_list = cfg.sections()
     config_dict = {}
-    config_dict['minio_url'] = minio_url
-    config_dict['minio_domain'] = minio_domain
-    config_dict['access_key'] = access_key
-    config_dict['secret_key'] = secret_key
-    config_dict['minio_bucket'] = minio_bucket
-    config_dict['upload_log_path'] = upload_log_path
+    for section in section_list:
+        section_item = cfg.items(section)
+        for item in section_item:
+            config_dict[item[0]] = item[1]
     return config_dict
 
 
