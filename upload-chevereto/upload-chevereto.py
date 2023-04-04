@@ -14,13 +14,12 @@ import sys
 def read_config(config_path):
     cfg = ConfigParser()
     cfg.read(config_path, encoding='utf-8')
-    chevereto_url = cfg.get('chevereto', 'chevereto_url')
-    api_key = cfg.get('chevereto', 'api_key')
-    upload_log_path = cfg.get('log', 'upload_log_path')
+    section_list = cfg.sections()
     config_dict = {}
-    config_dict['chevereto_url'] = chevereto_url
-    config_dict['api_key'] = api_key
-    config_dict['upload_log_path'] = upload_log_path
+    for section in section_list:
+        section_item = cfg.items(section)
+        for item in section_item:
+            config_dict[item[0]] = item[1]
     return config_dict
 
 
